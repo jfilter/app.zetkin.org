@@ -48,6 +48,7 @@ export default function useEventParticipants(
     actionOnLoad: () => participantsLoad(eventId),
     actionOnSuccess: (participants) =>
       participantsLoaded([eventId, participants]),
+    cacheKey: `event-participants-${orgId}-${eventId}`,
     loader: () =>
       apiClient.get<ZetkinEventParticipant[]>(
         `/api/orgs/${orgId}/actions/${eventId}/participants`
@@ -72,6 +73,7 @@ export default function useEventParticipants(
   const respondents = useRemoteList(respondentsList, {
     actionOnLoad: () => respondentsLoad(eventId),
     actionOnSuccess: (respondents) => respondentsLoaded([eventId, respondents]),
+    cacheKey: `event-respondents-${orgId}-${eventId}`,
     loader: () =>
       apiClient.get<ZetkinEventResponse[]>(
         `/api/orgs/${orgId}/actions/${eventId}/responses`

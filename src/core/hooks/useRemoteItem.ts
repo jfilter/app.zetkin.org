@@ -22,7 +22,8 @@ export default function useRemoteItem<
   }
 ): DataType {
   const dispatch = useAppDispatch();
-  const loadIsNecessary = hooks.isNecessary?.() ?? shouldLoad(remoteItem);
+  const loadIsNecessary =
+    (hooks.isNecessary?.() ?? true) && shouldLoad(remoteItem);
 
   const promiseKey = hooks.cacheKey || hooks.loader.toString();
   const { cache, getExistingPromise } = usePromiseCache(promiseKey);
