@@ -51,7 +51,7 @@ export const PublicEventPage: FC<Props> = ({ eventId, orgId }) => {
   const messages = useMessages(messageIds);
   const myEvents = useMyEvents();
   const userMemberships = useUserMemberships();
-  const baseEvent = useEvent(orgId, eventId)?.data;
+  const baseEvent = useEvent(orgId, eventId);
   const baseEventWithStatus: ZetkinEventWithStatus | undefined = baseEvent
     ? { ...baseEvent, status: null }
     : undefined;

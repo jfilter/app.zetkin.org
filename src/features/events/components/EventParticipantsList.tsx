@@ -31,12 +31,11 @@ const EventParticipantsList = forwardRef(function EventParticipantsList(
     numSignedParticipants,
     numUnverifiedParticipants,
     pendingSignUps,
-    respondentsFuture,
+    respondents,
     unverifiedParticipants,
   } = useEventParticipants(orgId, data.id);
   const { addParticipant } = useEventParticipantsMutations(orgId, data.id);
   const participantStatus = useParticipantStatus(orgId, data.id);
-  const respondents = respondentsFuture.data;
 
   return (
     <Box ref={ref}>

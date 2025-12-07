@@ -32,7 +32,7 @@ const ParticipantSummaryCard: FC<ParticipantSummaryCardProps> = ({
   onClickRecord,
   orgId,
 }) => {
-  const event = useEvent(orgId, eventId)?.data;
+  const event = useEvent(orgId, eventId);
   const participantStatus = useParticipantStatus(orgId, eventId);
   const {
     numAllSignedParticipants,

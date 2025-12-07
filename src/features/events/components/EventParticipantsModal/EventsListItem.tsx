@@ -24,7 +24,7 @@ type Props = {
 };
 
 const EventListsItem: FC<Props> = ({ eventId, onSelect, orgId, selected }) => {
-  const event = useEvent(orgId, eventId)?.data;
+  const event = useEvent(orgId, eventId);
   const messages = useMessages(messageIds);
   const { numParticipantsAvailable, numParticipantsRequired } =
     useEventParticipantsWithChanges(orgId, eventId);
