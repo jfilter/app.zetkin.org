@@ -2,10 +2,14 @@
 
 import { Box } from '@mui/material';
 
+import { useMessages } from 'core/i18n';
+import messageIds from 'core/l10n/messageIds';
 import ZUIText from 'zui/components/ZUIText';
 import ZUIButton from 'zui/components/ZUIButton';
 
 export default function MyNotFound() {
+  const messages = useMessages(messageIds);
+
   return (
     <Box
       sx={{
@@ -21,12 +25,12 @@ export default function MyNotFound() {
       <ZUIText color="secondary" variant="headingLg">
         404
       </ZUIText>
-      <ZUIText variant="headingMd">Page not found</ZUIText>
+      <ZUIText variant="headingMd">{messages.err404.pageNotFound()}</ZUIText>
       <Box mt={2}>
         <ZUIButton
           href="/my/home"
-          label="Back to home page"
-          variant="secondary"
+          label={messages.err404.backToHomePage()}
+          variant="tertiary"
         />
       </Box>
     </Box>

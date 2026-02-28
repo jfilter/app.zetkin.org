@@ -8,10 +8,10 @@ import HomeThemeProvider from 'features/my/components/HomeThemeProvider';
 import ActivistPortalHeader from 'features/public/components/ActivistPortalHeader';
 import ZUIPublicFooter from 'zui/components/ZUIPublicFooter';
 import ZUIText from 'zui/components/ZUIText';
-import ZUILogo from 'zui/ZUILogo';
 import ZUIButton from 'zui/components/ZUIButton';
+import ZUILogo from 'zui/ZUILogo';
 
-export default function NotFound() {
+export default function CanvassNotFound() {
   const messages = useMessages(messageIds);
 
   return (
@@ -41,12 +41,12 @@ export default function NotFound() {
             404
           </ZUIText>
           <ZUIText variant="headingMd">
-            {messages.err404.pageNotFound()}
+            {messages.err404.assignmentNotFound()}
           </ZUIText>
           <Box mt={2}>
             <ZUIButton
-              href="/"
-              label={messages.err404.backToHomePage()}
+              href="/my"
+              label={messages.err404.goToMyZetkin()}
               variant="tertiary"
             />
           </Box>

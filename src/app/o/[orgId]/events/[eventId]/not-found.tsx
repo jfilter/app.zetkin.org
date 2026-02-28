@@ -1,6 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
+import { useParams } from 'next/navigation';
 
 import { useMessages } from 'core/i18n';
 import messageIds from 'core/l10n/messageIds';
@@ -8,11 +9,13 @@ import HomeThemeProvider from 'features/my/components/HomeThemeProvider';
 import ActivistPortalHeader from 'features/public/components/ActivistPortalHeader';
 import ZUIPublicFooter from 'zui/components/ZUIPublicFooter';
 import ZUIText from 'zui/components/ZUIText';
-import ZUILogo from 'zui/ZUILogo';
 import ZUIButton from 'zui/components/ZUIButton';
+import ZUILogo from 'zui/ZUILogo';
 
-export default function NotFound() {
+export default function EventNotFound() {
   const messages = useMessages(messageIds);
+  const params = useParams();
+  const orgId = params?.orgId;
 
   return (
     <HomeThemeProvider>
@@ -41,12 +44,12 @@ export default function NotFound() {
             404
           </ZUIText>
           <ZUIText variant="headingMd">
-            {messages.err404.pageNotFound()}
+            {messages.err404.eventNotFound()}
           </ZUIText>
           <Box mt={2}>
             <ZUIButton
-              href="/"
-              label={messages.err404.backToHomePage()}
+              href={`/o/${orgId}`}
+              label={messages.err404.goToOrganization()}
               variant="tertiary"
             />
           </Box>

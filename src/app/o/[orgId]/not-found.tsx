@@ -1,8 +1,10 @@
 'use client';
 
 import { Box } from '@mui/material';
-import NextLink from 'next/link';
 
+import { useMessages } from 'core/i18n';
+import messageIds from 'core/l10n/messageIds';
+import useUser from 'core/hooks/useUser';
 import HomeThemeProvider from 'features/my/components/HomeThemeProvider';
 import ActivistPortalHeader from 'features/public/components/ActivistPortalHeader';
 import ZUIPublicFooter from 'zui/components/ZUIPublicFooter';
@@ -11,6 +13,9 @@ import ZUIButton from 'zui/components/ZUIButton';
 import ZUILogo from 'zui/ZUILogo';
 
 export default function OrgNotFound() {
+  const messages = useMessages(messageIds);
+  const user = useUser();
+
   return (
     <HomeThemeProvider>
       <Box
@@ -22,13 +27,7 @@ export default function OrgNotFound() {
           minHeight: '100dvh',
         }}
       >
-        <ActivistPortalHeader
-          topLeftComponent={
-            <NextLink href="/" style={{ textDecoration: 'none' }}>
-              <ZUILogo />
-            </NextLink>
-          }
-        />
+        <ActivistPortalHeader topLeftComponent={<ZUILogo />} />
         <Box
           sx={{
             alignItems: 'center',
@@ -43,9 +42,18 @@ export default function OrgNotFound() {
           <ZUIText color="secondary" variant="headingLg">
             404
           </ZUIText>
-          <ZUIText variant="headingMd">Page not found</ZUIText>
+          <ZUIText variant="headingMd">{messages.err404.orgNotFound()}</ZUIText>
+          <ZUIText color="secondary">
+            {user
+              ? messages.err404.loggedInOrgText()
+              : messages.err404.loggedOutOrgText()}
+          </ZUIText>
           <Box mt={2}>
-            <ZUIButton href="/" label="Back to home page" variant="secondary" />
+            <ZUIButton
+              href="/my/orgs"
+              label={messages.err404.goToMyZetkin()}
+              variant="tertiary"
+            />
           </Box>
         </Box>
         <ZUIPublicFooter />
