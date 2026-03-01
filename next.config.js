@@ -14,6 +14,10 @@ module.exports = {
    */
   allowedDevOrigins: [],
 
+  experimental: {
+    reactCompiler: true,
+  },
+
   serverExternalPackages: ['mjml', 'mongoose'],
 
   images: {
