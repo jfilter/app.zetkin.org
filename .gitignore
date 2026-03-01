@@ -52,3 +52,6 @@ tsconfig.tsbuildinfo
 # generated docs
 public/docs
 public/storybook
+
+# generated locale files
+public/locale
