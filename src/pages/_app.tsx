@@ -6,11 +6,12 @@ import { LicenseInfo } from '@mui/x-data-grid-pro';
 import { NoSsr } from '@mui/material';
 import NProgress from 'nprogress';
 import Router from 'next/router';
-import { useEffect, useRef, type JSX } from 'react';
+import { useEffect, useRef, useState, type JSX } from 'react';
 
 import createStore, { Store } from 'core/store';
 import BrowserApiClient from 'core/api/client/BrowserApiClient';
 import Environment from 'core/env/Environment';
+import { MessageList } from 'utils/locale';
 import { PageWithLayout } from '../utils/types';
 import Providers from 'core/Providers';
 
@@ -35,8 +36,11 @@ declare global {
   }
 }
 
+// Module-level cache: translations are fetched once per language per session
+const messageCache: Record<string, MessageList> = {};
+
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const { envVars, lang, messages, ...restProps } = pageProps;
+  const { envVars, lang, ...restProps } = pageProps;
   const c = Component as PageWithLayout;
   const getLayout = c.getLayout || ((page) => page);
 
@@ -57,6 +61,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     LicenseInfo.setLicenseKey(env.vars.MUIX_LICENSE_KEY);
   }
 
+  const effectiveLang = lang || 'en';
+  const [messages, setMessages] = useState<MessageList>(
+    messageCache[effectiveLang] || {}
+  );
+
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -65,10 +74,24 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     }
   }, []);
 
+  useEffect(() => {
+    if (messageCache[effectiveLang]) {
+      setMessages(messageCache[effectiveLang]);
+      return;
+    }
+
+    fetch(`/locale/${effectiveLang}.json`)
+      .then((res) => res.json())
+      .then((data: MessageList) => {
+        messageCache[effectiveLang] = data;
+        setMessages(data);
+      });
+  }, [effectiveLang]);
+
   return (
     <Providers
       env={env}
-      lang={lang}
+      lang={effectiveLang}
       messages={messages}
       store={storeRef.current}
       user={pageProps.user}
