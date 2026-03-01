@@ -17,6 +17,11 @@ async function globalSetup() {
     path.join(__dirname, '..', '.env.production')
   );
 
+  // Generate locale JSON files (needed for client-side translation loading)
+  await execPromisified('npx tsx scripts/generate-locale-json.ts', {
+    cwd: path.join(__dirname, '..'),
+  });
+
   // Skip build if flag is set to 1
   if (process.env.SKIP_BUILD === '1') {
     console.log('skipping build: SKIP_BUILD is set');

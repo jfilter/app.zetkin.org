@@ -7,7 +7,7 @@ import {
 } from 'next';
 
 import { AppSession } from './types';
-import { getBrowserLanguage, getMessages } from './locale';
+import { getBrowserLanguage } from './locale';
 import getUserMemberships from './getUserMemberships';
 import requiredEnvVar from './requiredEnvVar';
 import { stringToBool } from './stringUtils';
@@ -30,7 +30,6 @@ type RegularProps = {
 export type ScaffoldedProps = RegularProps & {
   envVars: EnvVars;
   lang: string;
-  messages: Record<string, string>;
   user: ZetkinUser | null;
 };
 
@@ -216,11 +215,6 @@ export const scaffold =
     // Figure out browser's preferred language
     const lang = ctx.user?.lang || getBrowserLanguage(contextFromNext.req);
 
-    // TODO: Respect scope from options again
-    //const localeScope = (options?.localeScope ?? []).concat(['misc', 'zui']);
-    const localeScope: string[] = [];
-    const messages = await getMessages(lang, localeScope);
-
     if (hasProps(result)) {
       result.props = {
         ...result.props,
@@ -241,7 +235,6 @@ export const scaffold =
           ZETKIN_PRIVACY_POLICY_LINK: process.env.ZETKIN_PRIVACY_POLICY_LINK,
         }),
         lang,
-        messages,
         user: ctx.user,
       };
     }
