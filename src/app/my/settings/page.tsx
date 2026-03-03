@@ -1,8 +1,5 @@
-import redirectIfLoginNeeded from 'core/utils/redirectIfLoginNeeded';
 import SettingsPage from 'features/my/pages/SettingsPage';
 
-export default async function Page() {
-  await redirectIfLoginNeeded();
-
+export default function Page() {
   return <SettingsPage />;
 }
